@@ -3,6 +3,8 @@
 
 ## API 명세서
 [API명세서 링크](https://www.notion.so/029df8f3e21a44cea5042fffdfece64e)
+![image](https://github.com/dev-pokemon/newsfeed/assets/155534061/49b38e3d-d26c-4842-b52a-101b84727223)
+
 
 ## ERD TABLE
 ![image](https://github.com/dev-pokemon/newsfeed/assets/155534061/c1546a61-fdf0-41fd-91aa-7355a8e848e0)
