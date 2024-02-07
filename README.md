@@ -1,6 +1,9 @@
 ## 프로젝트 설명
 내 게시물을 포함한 모든 게시물을 볼 수 있는 백엔드 서버
 
+## 개발환경
+
+
 ## API 명세서
 [API명세서 링크](https://www.notion.so/029df8f3e21a44cea5042fffdfece64e)
 ![image](https://github.com/dev-pokemon/newsfeed/assets/155534061/49b38e3d-d26c-4842-b52a-101b84727223)
