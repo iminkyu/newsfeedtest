@@ -1,11 +1,8 @@
 package com.pokemon.newsfeed.entity;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @NoArgsConstructor
