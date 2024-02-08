@@ -2,14 +2,14 @@ package com.pokemon.newsfeed.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter
 @Entity
 @Table(name = "users")
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class User {
     // todo: 고유번호를 사용하는 컬럼명을 바꿔도 될지...
     @Id
