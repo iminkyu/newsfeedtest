@@ -7,7 +7,7 @@
 - IDE - IntelliJ
 - DataBase - MySQL
 - Project - Gradle(groovy)
-- 협업도구 - notion, github
+- 협업툴 - Github, Notion, Slack, Figma, ERDCloud
 
 ## API 명세서
 [API명세서 링크](https://www.notion.so/029df8f3e21a44cea5042fffdfece64e)
