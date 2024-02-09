@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long userSeq;
     @Column(nullable = false, unique = true, length = 50)
     private String userId;
@@ -20,5 +21,14 @@ public class User {
     private String email;
     @Column(nullable = false, length = 50)
     private String name;
+
+    public User(String userId, String password, String email, String name) {
+        this.userId = userId;
+        this.password = password;
+        this.email = email;
+        this.name = name;
+    }
+
+    public void updateUser(String userId, String password, String email, String name){}
 
 }
