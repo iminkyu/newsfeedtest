@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
-public class User {
+public class User extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userSeq;
@@ -21,4 +21,10 @@ public class User {
     @Column(nullable = false, length = 50)
     private String name;
 
+    public User(String userId, String password, String email, String name) {
+        this.userId = userId;
+        this.password = password;
+        this.email = email;
+        this.name = name;
+    }
 }
