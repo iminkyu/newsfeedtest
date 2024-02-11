@@ -3,7 +3,6 @@ package com.pokemon.newsfeed.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.web.authentication.session.NullAuthenticatedSessionStrategy;
 
 @Getter
 @Entity

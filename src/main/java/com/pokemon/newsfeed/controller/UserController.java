@@ -1,30 +1,28 @@
 package com.pokemon.newsfeed.controller;
 
 import com.pokemon.newsfeed.dto.requestDto.SignupRequestDto;
+import com.pokemon.newsfeed.dto.responseDto.ProfileResponseDto;
 import com.pokemon.newsfeed.service.UserService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.SocketTimeoutException;
 import java.util.List;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
 
-    public UserController (UserService userService) {
-        this.userService = userService;
-    }
-
-    @PostMapping("/users/signup")
+    @PostMapping("/signup")
     public String signup (@Valid @RequestBody SignupRequestDto requestDto, BindingResult bindingResult) {
         // todo: RequestBody 어노테이션 없으면 null이 들어오는 이유
         System.out.println(requestDto);
@@ -41,5 +39,12 @@ public class UserController {
         userService.signup(requestDto);
 
         return "회원가입 성공";
+    }
+
+    // 프로필 단건조회
+    @GetMapping("/{num}")
+    public ProfileResponseDto getProfile (@PathVariable Long num) {
+
+        return userService.getProfile(num);
     }
 }
