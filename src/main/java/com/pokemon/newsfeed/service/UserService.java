@@ -2,6 +2,7 @@ package com.pokemon.newsfeed.service;
 
 import com.pokemon.newsfeed.dto.requestDto.SignupRequestDto;
 import com.pokemon.newsfeed.entity.User;
+import com.pokemon.newsfeed.entity.UserRoleEnum;
 import com.pokemon.newsfeed.repository.UserRepository;
 import com.pokemon.newsfeed.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -37,9 +38,10 @@ public class UserService {
         }
 
         String name = requestDto.getName();
+        UserRoleEnum role = UserRoleEnum.USER;
 
         // 사용자 등록
-        User user = new User(userId, password, email, name);
+        User user = new User(userId, password, email, name, role);
         userRepository.save(user);
     }
 }
