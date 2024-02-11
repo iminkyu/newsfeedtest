@@ -18,6 +18,9 @@ public class UserDetailsImpl implements UserDetails {
         this.user = user;
     }
     // User 객체 생성 후 생성자를 통해 이 객체를 받아서 멤버 변수로 사용
+    public User getUser() {
+        return user;
+    }
 
     @Override
     public String getUsername() {
