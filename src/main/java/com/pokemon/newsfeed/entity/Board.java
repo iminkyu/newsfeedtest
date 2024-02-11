@@ -1,6 +1,5 @@
 package com.pokemon.newsfeed.entity;
 
-import com.pokemon.newsfeed.dto.requestDto.BoardRequestDto;
 import com.pokemon.newsfeed.dto.requestDto.BoardUpdateDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
