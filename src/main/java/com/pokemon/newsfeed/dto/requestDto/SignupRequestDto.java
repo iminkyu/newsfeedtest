@@ -3,10 +3,11 @@ package com.pokemon.newsfeed.dto.requestDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Getter
-@ToString
+@Setter
 public class SignupRequestDto {
     @NotBlank
     private String userId;
@@ -17,5 +18,4 @@ public class SignupRequestDto {
     private String email;
     @NotBlank
     private String name;
-
 }
