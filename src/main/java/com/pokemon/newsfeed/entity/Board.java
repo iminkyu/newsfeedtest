@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class Board extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long boardSeq;
+    private Long boardNum;
     @Column(nullable = false, length = 50)
     private String title;
     @Lob // 대용량 데이터 저장 시 사용
