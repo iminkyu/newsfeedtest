@@ -15,7 +15,7 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     @Transactional
-    public Board updateBoard(Long boardNum, BoardUpdateDto requestDto, User user) { //update 로직입니다.
+    public Board updateBoard(Long boardNum, BoardUpdateDto requestDto, User user) {
         Board board = findOne(boardNum);
         if (!board.getUser().equals(user)) {
             throw new IllegalArgumentException("작성자만 삭제/수정할 수 있습니다.");
@@ -24,7 +24,7 @@ public class BoardService {
         return board;
     }
 
-    public void deleteBoard(Long boardnum, User user) { //delete 로직입니다.
+    public void deleteBoard(Long boardnum, User user) {
         Board board = findOne(boardnum);
 
         if (!board.getUser().equals(user)) {
