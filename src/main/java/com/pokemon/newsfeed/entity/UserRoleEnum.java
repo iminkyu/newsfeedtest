@@ -1,7 +1,5 @@
 package com.pokemon.newsfeed.entity;
 
-import org.springframework.aop.framework.autoproxy.InfrastructureAdvisorAutoProxyCreator;
-
 public enum UserRoleEnum {
     USER(Authority.USER); // 사용자 권한
 
