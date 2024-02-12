@@ -19,10 +19,6 @@ public class UserDetailsImpl implements UserDetails {
     public User getUser() {
         return user;
     }
-
-    public User getUser() {
-        return user;
-    }
     @Override
     public String getUsername() {
         return user.getUserId();
