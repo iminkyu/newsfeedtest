@@ -2,6 +2,7 @@ package com.pokemon.newsfeed.service;
 
 import com.pokemon.newsfeed.dto.requestDto.LoginRequestDto;
 import com.pokemon.newsfeed.dto.requestDto.SignupRequestDto;
+import com.pokemon.newsfeed.dto.requestDto.UserUpdateDto;
 import com.pokemon.newsfeed.dto.responseDto.LoginResponseDto;
 import com.pokemon.newsfeed.dto.responseDto.ProfileResponseDto;
 import com.pokemon.newsfeed.dto.responseDto.UserResponseDto;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -70,10 +72,22 @@ public class UserService {
     }
 
     // 프로필 조회
-    public ProfileResponseDto getProfile(Long num) {
-            User user = userRepository.findById(num).orElseThrow(() -> new IllegalArgumentException("해당 아이디는 존재하지 않습니다."));
+    public ProfileResponseDto getProfile(Long userNum) {
+            User user = userRepository.findById(userNum).orElseThrow(() -> new IllegalArgumentException("해당 아이디는 존재하지 않습니다."));
             return new ProfileResponseDto(user.getName(), user.getUserId(), user.getEmail());
     }
 
 
+    // 프로필 수정
+    @Transactional
+    public ProfileResponseDto updateProfile(Long userNum, UserUpdateDto request) {
+       User user = userRepository.findByIdAndPassword(userNum, request.getPassword()).orElseThrow(() -> new IllegalArgumentException(" 계정 정보가 일치하지 않습니다."));
+        // 비밀번호 확인
+        // todo: RuntimeException인지 다른 Exception인지.. 같이 고민해보기
+        if (!request.getPassword().equals(request.getConfirmPassword())) {
+            throw new RuntimeException("패스워드가 일치하지 않습니다.");
+        }
+        user.updateProfile(request.getName(), request.getUserId(), request.getEmail());
+        return new ProfileResponseDto(user.getName(), user.getUserId(), user.getEmail());
+    }
 }
