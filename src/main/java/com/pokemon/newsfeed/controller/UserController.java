@@ -4,6 +4,7 @@ import com.pokemon.newsfeed.dto.requestDto.LoginRequestDto;
 import com.pokemon.newsfeed.dto.requestDto.SignupRequestDto;
 import com.pokemon.newsfeed.dto.responseDto.LoginResponseDto;
 import com.pokemon.newsfeed.security.UserDetailsImpl;
+import com.pokemon.newsfeed.dto.responseDto.ProfileResponseDto;
 import com.pokemon.newsfeed.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -59,4 +60,10 @@ public class UserController {
         return "로그인 성공";
     }
 
+    // 프로필 단건조회
+    @GetMapping("/{num}")
+    public ProfileResponseDto getProfile (@PathVariable Long num) {
+
+        return userService.getProfile(num);
+    }
 }

@@ -3,6 +3,7 @@ package com.pokemon.newsfeed.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import java.util.Objects;
 
 @Getter
 @Entity
@@ -30,5 +31,12 @@ public class User extends Timestamped {
         this.email = email;
         this.name = name;
         this.role = role;
+    }
+
+    @Override
+    public boolean equals(Object o) {  //user 객체의 num 과 userid 속성이 같은 경우에만 두 객체를 동등하다고 판단하는 로직
+        if (this == o) return true;
+        if (!(o instanceof User user)) return false;
+        return Objects.equals(getUserNum(), user.getUserNum()) && Objects.equals(getUserId(), user.getUserId());
     }
 }
