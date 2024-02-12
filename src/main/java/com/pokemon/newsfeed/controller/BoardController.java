@@ -1,5 +1,6 @@
 package com.pokemon.newsfeed.controller;
 
+import com.pokemon.newsfeed.dto.requestDto.BoardDeleteDto;
 import com.pokemon.newsfeed.dto.requestDto.BoardUpdateDto;
 import com.pokemon.newsfeed.dto.responseDto.BoardResponseDto;
 import com.pokemon.newsfeed.entity.Board;
@@ -26,5 +27,15 @@ public class BoardController {
         BoardResponseDto boardResponseDto = new BoardResponseDto(board);
 
         return new ResponseEntity<>(boardResponseDto, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{boardnum}")
+    public ResponseEntity<String> deleteBoard(
+            @PathVariable Long boardnum,
+            @RequestBody BoardDeleteDto requestDto,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        boardService.deleteBoard(boardnum, requestDto, userDetails.getUser());
+        return ResponseEntity.ok("삭제 완료");
     }
 }

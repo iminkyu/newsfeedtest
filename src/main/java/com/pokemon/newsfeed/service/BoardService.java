@@ -1,5 +1,6 @@
 package com.pokemon.newsfeed.service;
 
+import com.pokemon.newsfeed.dto.requestDto.BoardDeleteDto;
 import com.pokemon.newsfeed.dto.requestDto.BoardUpdateDto;
 import com.pokemon.newsfeed.entity.Board;
 import com.pokemon.newsfeed.entity.User;
@@ -16,15 +17,25 @@ public class BoardService {
     @Transactional
     public Board updateBoard(Long boardNum, BoardUpdateDto requestDto, User user) {
         Board board = findOne(boardNum);
-        if(!board.getUser().equals(user)) {
+        if (!board.getUser().equals(user)) {
             throw new IllegalArgumentException("작성자만 삭제/수정할 수 있습니다.");
         }
-            board.updateBoard(requestDto);
-            return board;
+        board.updateBoard(requestDto);
+        return board;
+    }
+
+    public void deleteBoard(Long boardnum, BoardDeleteDto requestDto, User user) {
+        Board board = findOne(boardnum);
+
+        if (!board.getUser().equals(user)) {
+            throw new IllegalArgumentException("작성자만 삭제/수정할 수 있습니다.");
         }
+        boardRepository.delete(board);
+    }
 
 
     private Board findOne(Long boardNum) {
         return boardRepository.findById(boardNum).orElseThrow(() -> new IllegalArgumentException("없는 게시글 입니다."));
     }
+
 }
