@@ -5,7 +5,6 @@ import com.pokemon.newsfeed.entity.UserRoleEnum;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.yaml.snakeyaml.external.com.google.gdata.util.common.base.UnicodeEscaper;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,6 +17,9 @@ public class UserDetailsImpl implements UserDetails {
         this.user = user;
     }
     // User 객체 생성 후 생성자를 통해 이 객체를 받아서 멤버 변수로 사용
+    public User getUser() {
+        return user;
+    }
 
     @Override
     public String getUsername() {
