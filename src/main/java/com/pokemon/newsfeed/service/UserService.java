@@ -1,6 +1,8 @@
 package com.pokemon.newsfeed.service;
 
+import com.pokemon.newsfeed.dto.requestDto.LoginRequestDto;
 import com.pokemon.newsfeed.dto.requestDto.SignupRequestDto;
+import com.pokemon.newsfeed.dto.responseDto.LoginResponseDto;
 import com.pokemon.newsfeed.dto.responseDto.ProfileResponseDto;
 import com.pokemon.newsfeed.dto.responseDto.UserResponseDto;
 import com.pokemon.newsfeed.entity.User;
@@ -23,6 +25,23 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+
+    public LoginResponseDto login(LoginRequestDto requestDto) {
+        Optional<User> user = userRepository.findByUserId(requestDto.getUserId());
+        if (!user.isPresent()) {
+            throw new IllegalArgumentException("존재하지 않는 회원입니다.");
+        }
+        String token = jwtUtil.createToken(user.get().getUserId(), UserRoleEnum.USER);
+
+        LoginResponseDto responseDto = LoginResponseDto.builder()
+                .userId(requestDto.getUserId())
+                .password(requestDto.getPassword())
+                .token(token)
+                .build();
+
+        return responseDto;
+    }
+
     public void signup(SignupRequestDto requestDto) {
         System.out.println(requestDto);
         // 회원 중복 체크

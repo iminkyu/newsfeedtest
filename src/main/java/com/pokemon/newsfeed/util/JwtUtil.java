@@ -1,21 +1,17 @@
 package com.pokemon.newsfeed.util;
 
+import com.pokemon.newsfeed.entity.UserRoleEnum;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import jakarta.annotation.PostConstruct;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
@@ -26,7 +22,7 @@ public class JwtUtil {
     public static  final String AUTHORIZATION_HEADER = "Authorization";
 
     // 사용자 권한 값의 Key
-//    public static final String AUTHORIZATION_KEY = "auth"; // 권한 사용할 때 필요
+    public static final String AUTHORIZATION_KEY = "auth"; // 권한 사용할 때 필요
 
     //Token 식별자
     public static final String BEARER_PREFIX = "Bearer";
@@ -50,13 +46,13 @@ public class JwtUtil {
     }
 
     // 토큰 생성
-    public String createToken (String userId) {
+    public String createToken (String userId, UserRoleEnum role) {
         Date date = new Date();
 
         return BEARER_PREFIX +
                 Jwts.builder()
                         .setSubject(userId) // 사용자 식별 (id)
-//                        .claim(AUTHORIZATION_KEY, role) // 사용자 권한 확인할 때 사용
+                        .claim(AUTHORIZATION_KEY, role) // 사용자 권한 확인할 때 사용
                         .setExpiration(new Date(date.getTime() + TOKEN_TIME)) // 토큰 만료 시간
                         .setIssuedAt(date) // 토큰 발급일
                         .signWith(key, signatureAlgorithm) // 암호화 알고리즘
@@ -64,6 +60,40 @@ public class JwtUtil {
         // todo: return 내용 코드 분석하기
     }
 
+    // header에서 JWT 가져오기
+    public String getJwtFromHeader (HttpServletRequest req) {
+        String bearerToken = req.getHeader(AUTHORIZATION_HEADER);
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
+            return bearerToken.substring(7);
+        }
+        return null;
+    }
+
+    // 토큰 검증
+    public boolean validateToken (String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            // todo: 위 코드의 의미....
+            return true;
+        } catch (SecurityException | MalformedJwtException | SignatureException e) {
+            logger.error("Invalid JWT Signature, 유효하지 않는 JWT 서명입니다.");
+        } catch (ExpiredJwtException e) {
+            logger.error("Expired JWT Token, 만료된 JWT 토큰입니다.");
+        } catch (UnsupportedJwtException e) {
+            logger.error("Unsupported JWT Token, 지원되지 않는 JWT 토큰입니다.");
+        } catch (IllegalArgumentException e) {
+            logger.error("JWT Claims is Empty, 잘못된 JWT 토큰입니다.");
+        }
+        return false;
+    }
+
+    // 토큰에서 사용자 정보 가져오기
+    public Claims getUserInfoFromToken (String token) {
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+    }
+}
+
+/*
     // JWT Cookie에 저장
     public void addJwtToCookie (String token, HttpServletResponse res) {
         // todo: HttpServletResponse란?
@@ -94,29 +124,6 @@ public class JwtUtil {
         throw new NullPointerException("NOT FOUND TOKEN");
     }
 
-    // 토큰 검증
-    public boolean validteToken (String token) {
-        try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            // todo: 위 코드의 의미....
-            return true;
-        } catch (SecurityException | MalformedJwtException | SignatureException e) {
-            logger.error("Invalid JWT Signature, 유효하지 않는 JWT 서명입니다.");
-        } catch (ExpiredJwtException e) {
-            logger.error("Expired JWT Token, 만료된 JWT 토큰입니다.");
-        } catch (UnsupportedJwtException e) {
-            logger.error("Unsupported JWT Token, 지원되지 않는 JWT 토큰입니다.");
-        } catch (IllegalArgumentException e) {
-            logger.error("JWT Claims is Empty, 잘못된 JWT 토큰입니다.");
-        }
-        return false;
-    }
-
-    // 토큰에서 사용자 정보 가져오기
-    public Claims getUserInfoFromToken (String token) {
-        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
-    }
-
     // HttpServletRequest에서 Cookie Value : JWT 가져오기
     public String getTokenFromRequest (HttpServletRequest req) {
         Cookie[] cookies = req.getCookies();
@@ -133,4 +140,4 @@ public class JwtUtil {
         }
         return null;
     }
-}
+ */

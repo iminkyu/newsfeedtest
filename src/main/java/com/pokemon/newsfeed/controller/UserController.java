@@ -1,17 +1,19 @@
 package com.pokemon.newsfeed.controller;
 
+import com.pokemon.newsfeed.dto.requestDto.LoginRequestDto;
 import com.pokemon.newsfeed.dto.requestDto.SignupRequestDto;
+import com.pokemon.newsfeed.dto.responseDto.LoginResponseDto;
+import com.pokemon.newsfeed.security.UserDetailsImpl;
 import com.pokemon.newsfeed.dto.responseDto.ProfileResponseDto;
 import com.pokemon.newsfeed.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.SocketTimeoutException;
 import java.util.List;
 
 @Slf4j
@@ -39,6 +41,23 @@ public class UserController {
         userService.signup(requestDto);
 
         return "회원가입 성공";
+    }
+
+    @PostMapping("/login")
+    public LoginResponseDto login (@RequestBody LoginRequestDto requestDto) {
+        LoginResponseDto responseDto = userService.login(requestDto);
+        return responseDto;
+    }
+
+    // 회원 관련 정보 받기
+    @GetMapping("/info")
+    @ResponseBody
+    public String getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        String userId = userDetails.getUser().getUserId();
+        String password = userDetails.getPassword();
+        System.out.println(userId + ", " + password);
+
+        return "로그인 성공";
     }
 
     // 프로필 단건조회
