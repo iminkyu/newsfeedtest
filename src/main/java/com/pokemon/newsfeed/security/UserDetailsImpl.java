@@ -2,26 +2,27 @@ package com.pokemon.newsfeed.security;
 
 import com.pokemon.newsfeed.entity.User;
 import com.pokemon.newsfeed.entity.UserRoleEnum;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.yaml.snakeyaml.external.com.google.gdata.util.common.base.UnicodeEscaper;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
+@RequiredArgsConstructor
 public class UserDetailsImpl implements UserDetails {
     // UserDetails 인터페이스는 Spring Security에서 사용자의 정보를 나타내는데 사용됩니다.
 
     private final User user;
-    public UserDetailsImpl (User user) {
-        this.user = user;
-    }
     // User 객체 생성 후 생성자를 통해 이 객체를 받아서 멤버 변수로 사용
 
+    public User getUser() {
+        return user;
+    }
     @Override
     public String getUsername() {
-        return user.getName();
+        return user.getUserId();
     }
     // UserDetails 메서드 오바라이드하여 사용자 이름 반환
     // todo: 이 부분 id로 바꾸는 방법

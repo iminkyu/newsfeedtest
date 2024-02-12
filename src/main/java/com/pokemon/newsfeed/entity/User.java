@@ -3,7 +3,6 @@ package com.pokemon.newsfeed.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.web.authentication.session.NullAuthenticatedSessionStrategy;
 
 @Getter
 @Entity
@@ -12,7 +11,7 @@ import org.springframework.security.web.authentication.session.NullAuthenticated
 public class User extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userSeq;
+    private Long userNum;
     @Column(nullable = false, unique = true, length = 50)
     private String userId;
     @Column(nullable = false)

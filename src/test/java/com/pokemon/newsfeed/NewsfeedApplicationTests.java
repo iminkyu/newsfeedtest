@@ -11,19 +11,19 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("dev") // test 프로파일을 사용하여 application-dev.properties를 사용
 class NewsfeedApplicationTests {
 
-//    @Autowired
-//    private UserService userService;
-//
-//    @Test
-//    public void testSignup() {
-//        for (int i = 1; i <= 50; i++) {
-//            SignupRequestDto requestDto = new SignupRequestDto();
-//            requestDto.setUserId("test"+i);
-//            requestDto.setPassword(i+"");
-//            requestDto.setEmail("test"+i+"@"+"test"+i+".com");
-//            requestDto.setName("nameTest"+i);
-//
-//            userService.signup(requestDto);
-//        }
-//    }
+    @Autowired
+    private UserService userService;
+
+    @Test
+    public void testSignup() {
+        for (int i = 1; i <= 50; i++) {
+            SignupRequestDto requestDto = new SignupRequestDto();
+            requestDto.setUserId("test"+i);
+            requestDto.setPassword(i+"");
+            requestDto.setEmail("test"+i+"@"+"test"+i+".com");
+            requestDto.setName("nameTest"+i);
+
+            userService.signup(requestDto);
+        }
+    }
 }
