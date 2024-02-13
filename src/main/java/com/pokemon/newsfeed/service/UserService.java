@@ -81,7 +81,7 @@ public class UserService {
     // 프로필 수정
     @Transactional
     public ProfileResponseDto updateProfile(Long userNum, UserUpdateDto request) {
-       User user = userRepository.findByIdAndPassword(userNum, request.getPassword()).orElseThrow(() -> new IllegalArgumentException(" 계정 정보가 일치하지 않습니다."));
+       User user = userRepository.findById(userNum).orElseThrow(() -> new IllegalArgumentException(" 계정 정보가 일치하지 않습니다."));
         // 비밀번호 확인
         // todo: RuntimeException인지 다른 Exception인지.. 같이 고민해보기
         if (!request.getPassword().equals(request.getConfirmPassword())) {

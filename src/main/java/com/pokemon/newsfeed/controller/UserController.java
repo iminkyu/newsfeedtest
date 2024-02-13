@@ -10,6 +10,8 @@ import com.pokemon.newsfeed.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -62,15 +64,16 @@ public class UserController {
     }
 
     // 프로필 단건조회
-    @GetMapping("/{userNum}")
-    public ProfileResponseDto getProfile(@PathVariable Long userNum) {
-
-        return userService.getProfile(userNum);
+    @GetMapping
+    public ResponseEntity<ProfileResponseDto> getProfile(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        ProfileResponseDto response = userService.getProfile(userDetails.getUser().getUserNum());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     // 프로필 수정
-    @PutMapping("/{userNum}")
-    public ProfileResponseDto updateProfile(@PathVariable Long userNum, @RequestBody UserUpdateDto request) {
-        return userService.updateProfile(userNum, request);
+    @PutMapping
+    public ResponseEntity<ProfileResponseDto> updateProfile(@RequestBody UserUpdateDto request, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        ProfileResponseDto response = userService.updateProfile(userDetails.getUser().getUserNum(), request);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
