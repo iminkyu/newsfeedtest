@@ -13,9 +13,10 @@ public class UserUpdateDto {
     private String userId;
     @NotBlank
     private String email;
+    @Pattern(regexp = "^[a-zA-Z0-9]{8,15}$", message = "영대소문자와 숫자만, 8~15길이만 허용")
     @NotBlank
     private String password;
-    @Pattern(regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+    @Pattern(regexp = "^[a-zA-Z0-9]{8,15}$", message = "영대소문자와 숫자만, 8~15길이만 허용")
     @NotBlank
     private String confirmPassword;
 }
