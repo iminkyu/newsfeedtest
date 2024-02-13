@@ -52,7 +52,7 @@ public class UserController {
         return responseDto;
     }
 
-    // 회원 관련 정보 받기
+    // 회원 관련 정보 받기 + 강의에서 봤던 이름님 환영합니다 부분 연결 api
     @GetMapping("/info")
     @ResponseBody
     public String getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
